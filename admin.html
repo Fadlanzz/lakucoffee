@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | LAKU COFFEE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+</head>
+<body class="bg-zinc-100 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex min-h-screen transition-colors duration-300">
+
+    <aside class="w-64 bg-white dark:bg-zinc-900 shadow-lg hidden md:block">
+        <div class="p-6">
+            <h1 class="text-xl font-bold">LAKU <span class="text-amber-600 text-sm">ADMIN</span></h1>
+        </div>
+        <nav class="mt-4 px-4">
+            <a href="#" class="block py-3 px-4 rounded bg-amber-600 text-white font-medium mb-2">Dashboard</a>
+            <a href="#" class="block py-3 px-4 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800 mb-2">Edit Menu</a>
+            <a href="#" class="block py-3 px-4 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800 mb-2">Orders</a>
+            <a href="#" class="block py-3 px-4 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">Settings</a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 p-8">
+        <header class="flex justify-between items-center mb-10">
+            <h2 class="text-2xl font-bold">Website Settings</h2>
+            <button id="theme-toggle" class="p-2 rounded-lg bg-white dark:bg-zinc-800 shadow">Toggle Theme</button>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-sm">
+                <h3 class="text-lg font-bold mb-4">Informasi Toko</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm opacity-70 mb-1">Nama Kedai</label>
+                        <input type="text" value="LAKU COFFEE" class="w-full p-2 rounded border dark:border-zinc-700 dark:bg-zinc-800">
+                    </div>
+                    <div>
+                        <label class="block text-sm opacity-70 mb-1">Hero Title</label>
+                        <input type="text" value="Awali Hari dengan LAKU" class="w-full p-2 rounded border dark:border-zinc-700 dark:bg-zinc-800">
+                    </div>
+                    <button class="bg-zinc-900 dark:bg-amber-600 text-white px-4 py-2 rounded font-medium">Simpan Perubahan</button>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-sm">
+                <h3 class="text-lg font-bold mb-4">Status Website</h3>
+                <div class="flex items-center justify-between p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                    <span>Website Status</span>
+                    <span class="text-green-600 font-bold uppercase text-sm">Online</span>
+                </div>
+                <p class="mt-4 text-sm opacity-60">Terakhir diperbarui: 15 Januari 2026</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            html.classList.toggle('dark');
+        });
+    </script>
+</body>
+</html>
