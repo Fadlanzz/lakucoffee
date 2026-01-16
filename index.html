@@ -6,84 +6,98 @@
     <title>LAKU COFFEE — Premium Experience</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#d97706', // Amber 600
+                        brandLight: '#fbbf24', // Amber 400
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Outfit:wght@300;600;700&display=swap');
         
-        body { font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; transition: background-color 0.5s ease; }
         h1, h2, .font-heading { font-family: 'Outfit', sans-serif; }
 
-        .dark body { background-color: #050505; color: #f4f4f5; }
-        
         .nav-glass {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
         }
         .dark .nav-glass {
-            background: rgba(5, 5, 0.8);
+            background: rgba(10, 10, 10, 0.7);
             border-bottom: 1px solid #1f1f1f;
         }
 
-        .product-card { transition: all 0.4s ease; }
-        .product-card:hover { transform: translateY(-8px); }
-        
-        /* Skeleton loading effect */
-        .skeleton { background: #e4e4e7; animate: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .product-card:hover { transform: translateY(-10px); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #d97706; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-zinc-50 text-zinc-900 overflow-x-hidden">
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 overflow-x-hidden">
 
     <audio id="bgMusic" loop>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    <nav class="fixed top-0 w-full z-50 nav-glass border-b border-zinc-200/50">
+    <nav class="fixed top-0 w-full z-50 nav-glass border-b border-zinc-200/50 dark:border-zinc-800/50">
         <div class="max-w-6xl mx-auto px-6 h-20 flex justify-between items-center">
-            <div class="text-2xl font-extrabold tracking-tighter font-heading uppercase text-zinc-900 dark:text-white">
-                LAKU<span class="text-amber-600">COFFEE</span>
+            <div class="text-2xl font-extrabold tracking-tighter font-heading uppercase">
+                LAKU<span class="text-brand">COFFEE</span>
             </div>
             <div class="flex items-center gap-4">
-                <button id="themeToggle" class="w-11 h-11 flex items-center justify-center rounded-2xl bg-zinc-100 dark:bg-zinc-800 hover:scale-105 transition">
-                    <span id="themeIcon" class="text-xl">🌙</span>
+                <button id="themeToggle" class="w-12 h-12 flex items-center justify-center rounded-2xl bg-white dark:bg-zinc-900 shadow-sm dark:shadow-none border border-zinc-200 dark:border-zinc-800 hover:scale-105 transition">
+                    <span id="themeIcon" class="text-xl text-brand">🌙</span>
                 </button>
             </div>
         </div>
     </nav>
 
-    <section class="pt-40 pb-20 px-6 max-w-5xl mx-auto text-center">
-        <div data-aos="fade-down" class="inline-block mb-4 px-3 py-1 bg-amber-600/10 text-amber-600 rounded-lg text-[10px] font-bold tracking-widest uppercase">
-            Experience the Best Coffee in Town
+    <section class="pt-44 pb-20 px-6 max-w-5xl mx-auto text-center">
+        <div data-aos="fade-down" class="inline-block mb-6 px-4 py-1.5 bg-brand/10 text-brand rounded-full text-[10px] font-bold tracking-[0.2em] uppercase border border-brand/20">
+            Artisan Coffee Roaster
         </div>
-        <h1 class="text-6xl md:text-8xl font-bold tracking-tight leading-none mb-6 dark:text-white" data-aos="fade-up">
-            Authentic <br><span class="text-amber-600 italic font-light">Taste of Joy.</span>
+        <h1 class="text-6xl md:text-8xl font-bold tracking-tight leading-[0.9] mb-8" data-aos="fade-up">
+            Purest <br><span class="text-brand italic font-light">Soul of Bean.</span>
         </h1>
-        <p class="text-zinc-500 dark:text-zinc-400 max-w-md mx-auto mb-10 text-lg" data-aos="fade-up" data-aos-delay="100">
-            Seduhan istimewa dari biji pilihan, hadir secara otomatis dari dapur Admin kami.
+        <p class="text-zinc-500 dark:text-zinc-400 max-w-md mx-auto mb-10 text-lg leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+            Menghadirkan kenyamanan di setiap tegukan, disinkronkan langsung dari dapur kami.
         </p>
     </section>
 
     <section id="menu" class="max-w-6xl mx-auto px-6 py-10">
-        <div id="menu-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div id="menu-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             </div>
 
-        <div id="empty-state" class="hidden text-center py-20">
-            <div class="w-20 h-20 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span class="text-3xl">☕</span>
-            </div>
-            <h3 class="text-xl font-bold">Belum Ada Menu</h3>
-            <p class="text-zinc-500">Silakan tambahkan produk melalui Admin Panel.</p>
+        <div id="empty-state" class="hidden text-center py-24 border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-[3rem]">
+            <span class="text-5xl block mb-4 opacity-30">☕</span>
+            <h3 class="text-xl font-bold opacity-50 uppercase tracking-widest">Dapur Sedang Tutup</h3>
+            <p class="text-zinc-500 text-sm">Update menu melalui Admin Panel Anda.</p>
         </div>
     </section>
 
-    <footer class="mt-32 pb-12 px-6">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 border-t border-zinc-200 dark:border-zinc-800 pt-10">
-            <p class="text-zinc-400 text-sm italic">© 2026 LAKU COFFEE — Crafted for your pleasure.</p>
+    <footer class="mt-32 pb-16 px-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 border-t border-zinc-200 dark:border-zinc-800 pt-12">
+            <div class="text-center md:text-left">
+                <p class="text-zinc-400 text-sm italic">© 2026 LAKU COFFEE — Premium Experience.</p>
+            </div>
             
-            <div class="flex items-center gap-4 bg-zinc-100 dark:bg-zinc-800/50 p-2 pl-5 rounded-2xl border border-zinc-200/50 dark:border-zinc-700">
-                <span class="text-[10px] font-bold uppercase tracking-widest opacity-50 dark:text-white">Ambience</span>
-                <button id="musicToggle" class="w-10 h-10 flex items-center justify-center bg-zinc-900 dark:bg-white text-white dark:text-black rounded-xl transition hover:rotate-6 active:scale-90">
-                    <span id="musicBtnIcon">⏸</span>
+            <div class="flex items-center gap-5 bg-white dark:bg-zinc-900 p-2 pl-6 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                <span class="text-[10px] font-bold uppercase tracking-[0.3em] opacity-40">Ambient Music</span>
+                <button id="musicToggle" class="w-12 h-12 flex items-center justify-center bg-brand text-white rounded-2xl transition hover:rotate-6 active:scale-90 shadow-lg shadow-brand/30">
+                    <span id="musicBtnIcon" class="text-lg">⏸</span>
                 </button>
             </div>
         </div>
@@ -91,14 +105,10 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // --- LOGIKA SINKRONISASI MENU ---
         function loadMenuFromStorage() {
             const container = document.getElementById('menu-container');
             const emptyState = document.getElementById('empty-state');
-            
-            // Mengambil data dari localStorage yang sama dengan Admin (laku_storage)
-            const savedData = localStorage.getItem('laku_storage');
-            const menuData = savedData ? JSON.parse(savedData) : [];
+            const menuData = JSON.parse(localStorage.getItem('laku_storage')) || [];
 
             if (menuData.length === 0) {
                 container.innerHTML = '';
@@ -110,40 +120,34 @@
             container.innerHTML = '';
 
             menuData.forEach((item, index) => {
-                // Gunakan gambar default jika admin tidak upload
                 const imageSrc = item.image || 'https://images.unsplash.com/photo-1541167760496-162955ed8a9f?q=80&w=600';
-                
-                // Format harga ke Rupiah
                 const formattedPrice = new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    minimumFractionDigits: 0
+                    style: 'currency', currency: 'IDR', minimumFractionDigits: 0
                 }).format(item.price);
 
-                // Buat link WA otomatis
-                const waMessage = encodeURIComponent(`Halo Laku Coffee, saya ingin memesan *${item.name}* (${item.category}).`);
+                const waMessage = encodeURIComponent(`Halo Laku Coffee, saya ingin pesan *${item.name}*`);
                 const waLink = `https://wa.me/6283851921812?text=${waMessage}`;
 
                 container.innerHTML += `
-                    <div class="product-card bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-4 rounded-[2.5rem]" 
+                    <div class="product-card bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-5 rounded-[3rem] shadow-xl shadow-zinc-200/50 dark:shadow-none" 
                          data-aos="fade-up" 
-                         data-aos-delay="${index * 50}">
-                        <div class="relative overflow-hidden rounded-[2rem] mb-6 aspect-square bg-zinc-100 dark:bg-zinc-800">
-                            <img src="${imageSrc}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" alt="${item.name}">
-                            <div class="absolute top-4 left-4">
-                                <span class="px-3 py-1 bg-white/90 dark:bg-black/70 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-widest dark:text-white">
+                         data-aos-delay="${index * 100}">
+                        <div class="relative overflow-hidden rounded-[2.5rem] mb-8 aspect-square group">
+                            <img src="${imageSrc}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="${item.name}">
+                            <div class="absolute top-5 right-5">
+                                <span class="px-4 py-1.5 bg-black/50 backdrop-blur-lg rounded-full text-[9px] font-bold uppercase tracking-widest text-white border border-white/20">
                                     ${item.category}
                                 </span>
                             </div>
                         </div>
-                        <div class="px-2">
-                            <h3 class="text-2xl font-bold mb-1 dark:text-white">${item.name}</h3>
-                            <p class="text-zinc-500 text-sm mb-4">Produk unggulan Laku Coffee dengan kualitas premium.</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-xl font-bold dark:text-amber-500">${formattedPrice}</span>
-                                <a href="${waLink}" target="_blank" class="w-12 h-12 bg-amber-600 hover:bg-amber-700 text-white flex items-center justify-center rounded-2xl shadow-lg shadow-amber-600/30 transition-all active:scale-90">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        <div class="px-3">
+                            <h3 class="text-3xl font-bold mb-2 tracking-tight">${item.name}</h3>
+                            <p class="text-zinc-400 dark:text-zinc-500 text-sm leading-relaxed mb-8">Kualitas premium dengan sensasi rasa otentik khas Laku Coffee.</p>
+                            <div class="flex justify-between items-center bg-zinc-50 dark:bg-zinc-800/50 p-4 rounded-[2rem]">
+                                <span class="text-xl font-bold text-brand">${formattedPrice}</span>
+                                <a href="${waLink}" target="_blank" class="w-14 h-14 bg-brand hover:bg-amber-700 text-white flex items-center justify-center rounded-[1.2rem] shadow-lg shadow-brand/40 transition-all active:scale-90">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                     </svg>
                                 </a>
                             </div>
@@ -151,12 +155,10 @@
                     </div>
                 `;
             });
-
-            // Refresh animasi AOS
             AOS.refresh();
         }
 
-        // --- THEME & MUSIC LOGIC ---
+        // --- CORE LOGIC ---
         const themeBtn = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
         const html = document.documentElement;
@@ -171,22 +173,15 @@
         const musicBtnIcon = document.getElementById('musicBtnIcon');
 
         musicToggle.addEventListener('click', () => {
-            if (music.paused) {
-                music.play();
-                musicBtnIcon.innerText = '⏸';
-            } else {
-                music.pause();
-                musicBtnIcon.innerText = '▶';
-            }
+            if (music.paused) { music.play(); musicBtnIcon.innerText = '⏸'; }
+            else { music.pause(); musicBtnIcon.innerText = '▶'; }
         });
 
-        // --- INISIALISASI ---
         document.addEventListener('DOMContentLoaded', () => {
             AOS.init({ duration: 1000, once: true });
             loadMenuFromStorage();
         });
 
-        // Dengarkan perubahan di Admin Panel (jika tab dibuka bersamaan)
         window.addEventListener('storage', (e) => {
             if (e.key === 'laku_storage') loadMenuFromStorage();
         });
