@@ -8,61 +8,214 @@
     <script>
         tailwind.config = { darkMode: 'class' }
     </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
 </head>
 <body class="bg-zinc-100 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex min-h-screen transition-colors duration-300">
 
-    <aside class="w-64 bg-white dark:bg-zinc-900 shadow-lg hidden md:block">
+    <aside class="w-64 bg-white dark:bg-zinc-900 shadow-lg hidden md:flex flex-col border-r dark:border-zinc-800">
         <div class="p-6">
             <h1 class="text-xl font-bold">LAKU <span class="text-amber-600 text-sm">ADMIN</span></h1>
         </div>
-        <nav class="mt-4 px-4">
-            <a href="#" class="block py-3 px-4 rounded bg-amber-600 text-white font-medium mb-2">Dashboard</a>
-            <a href="#" class="block py-3 px-4 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800 mb-2">Edit Menu</a>
-            <a href="#" class="block py-3 px-4 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800 mb-2">Orders</a>
-            <a href="#" class="block py-3 px-4 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800">Settings</a>
+        <nav class="mt-4 px-4 flex-1">
+            <a href="#" class="block py-3 px-4 rounded-xl bg-amber-600 text-white font-medium mb-2 shadow-lg shadow-amber-600/20">Dashboard</a>
+            <a href="#" class="block py-3 px-4 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 mb-2 transition">Orders</a>
         </nav>
+        <div class="p-6">
+            <button id="theme-toggle" class="w-full py-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg text-xs font-bold uppercase tracking-widest">Toggle Theme</button>
+        </div>
     </aside>
 
-    <main class="flex-1 p-8">
+    <main class="flex-1 p-6 md:p-10">
         <header class="flex justify-between items-center mb-10">
-            <h2 class="text-2xl font-bold">Website Settings</h2>
-            <button id="theme-toggle" class="p-2 rounded-lg bg-white dark:bg-zinc-800 shadow">Toggle Theme</button>
+            <h2 class="text-2xl font-bold tracking-tight">Manajemen Menu</h2>
+            <button onclick="openModal()" class="bg-zinc-900 dark:bg-amber-600 text-white px-5 py-2.5 rounded-xl font-bold shadow-xl hover:scale-105 transition active:scale-95">
+                + Tambah Produk
+            </button>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-sm">
-                <h3 class="text-lg font-bold mb-4">Informasi Toko</h3>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm opacity-70 mb-1">Nama Kedai</label>
-                        <input type="text" value="LAKU COFFEE" class="w-full p-2 rounded border dark:border-zinc-700 dark:bg-zinc-800">
-                    </div>
-                    <div>
-                        <label class="block text-sm opacity-70 mb-1">Hero Title</label>
-                        <input type="text" value="Awali Hari dengan LAKU" class="w-full p-2 rounded border dark:border-zinc-700 dark:bg-zinc-800">
-                    </div>
-                    <button class="bg-zinc-900 dark:bg-amber-600 text-white px-4 py-2 rounded font-medium">Simpan Perubahan</button>
-                </div>
-            </div>
-
-            <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-sm">
-                <h3 class="text-lg font-bold mb-4">Status Website</h3>
-                <div class="flex items-center justify-between p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                    <span>Website Status</span>
-                    <span class="text-green-600 font-bold uppercase text-sm">Online</span>
-                </div>
-                <p class="mt-4 text-sm opacity-60">Terakhir diperbarui: 15 Januari 2026</p>
-            </div>
+        <div class="bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border dark:border-zinc-800 overflow-hidden">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-zinc-50 dark:bg-zinc-800/50 border-b dark:border-zinc-800">
+                        <th class="p-4 text-sm font-bold opacity-60 uppercase">Gambar</th>
+                        <th class="p-4 text-sm font-bold opacity-60 uppercase">Nama Menu</th>
+                        <th class="p-4 text-sm font-bold opacity-60 uppercase">Kategori</th>
+                        <th class="p-4 text-sm font-bold opacity-60 uppercase">Harga</th>
+                        <th class="p-4 text-sm font-bold opacity-60 uppercase text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="menu-list" class="divide-y dark:divide-zinc-800"></tbody>
+            </table>
         </div>
     </main>
 
-    <script>
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const html = document.documentElement;
+    <div id="modal-menu" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white dark:bg-zinc-900 w-full max-w-lg rounded-3xl p-8 shadow-2xl overflow-y-auto max-h-[90vh]">
+            <h3 id="modal-title" class="text-xl font-bold mb-6">Informasi Produk</h3>
+            
+            <form id="form-menu" class="space-y-4">
+                <input type="hidden" id="menu-id">
+                
+                <div class="flex flex-col items-center justify-center p-4 border-2 border-dashed border-zinc-200 dark:border-zinc-700 rounded-2xl">
+                    <img id="img-preview" class="w-32 h-32 object-cover rounded-xl mb-3 hidden shadow-md">
+                    <label class="cursor-pointer bg-zinc-100 dark:bg-zinc-800 px-4 py-2 rounded-lg text-sm font-medium hover:bg-zinc-200 transition">
+                        <span>Pilih Foto Produk</span>
+                        <input type="file" id="menu-image" accept="image/*" class="hidden" onchange="previewFile()">
+                    </label>
+                    <p class="text-[10px] text-zinc-400 mt-2 text-center uppercase tracking-widest">Rekomendasi 1:1 (Max 1MB)</p>
+                </div>
 
-        themeToggleBtn.addEventListener('click', () => {
-            html.classList.toggle('dark');
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2">
+                        <label class="block text-xs font-bold uppercase mb-1 opacity-60 tracking-wider">Nama Menu</label>
+                        <input type="text" id="menu-name" required class="w-full p-3 rounded-xl border dark:border-zinc-700 dark:bg-zinc-800 outline-none focus:ring-2 ring-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase mb-1 opacity-60 tracking-wider">Kategori</label>
+                        <select id="menu-category" class="w-full p-3 rounded-xl border dark:border-zinc-700 dark:bg-zinc-800 outline-none">
+                            <option>Coffee</option>
+                            <option>Non-Coffee</option>
+                            <option>Snack</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase mb-1 opacity-60 tracking-wider">Harga (Rp)</label>
+                        <input type="number" id="menu-price" required class="w-full p-3 rounded-xl border dark:border-zinc-700 dark:bg-zinc-800 outline-none focus:ring-2 ring-amber-500">
+                    </div>
+                </div>
+
+                <div class="flex gap-3 pt-4">
+                    <button type="button" onclick="closeModal()" class="flex-1 py-3 text-zinc-500 font-medium">Batal</button>
+                    <button type="submit" class="flex-1 bg-amber-600 text-white py-3 rounded-2xl font-bold shadow-lg shadow-amber-600/30">Simpan Menu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let menuData = JSON.parse(localStorage.getItem('laku_storage')) || [];
+        let currentImageBase64 = "";
+
+        const menuList = document.getElementById('menu-list');
+        const modal = document.getElementById('modal-menu');
+        const preview = document.getElementById('img-preview');
+
+        // Render Data
+        function renderMenu() {
+            menuList.innerHTML = '';
+            menuData.forEach((item, index) => {
+                const imgTag = item.image 
+                    ? `<img src="${item.image}" class="w-12 h-12 object-cover rounded-lg">`
+                    : `<div class="w-12 h-12 bg-zinc-200 dark:bg-zinc-800 rounded-lg flex items-center justify-center text-[10px]">No Img</div>`;
+
+                menuList.innerHTML += `
+                    <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-800/30 transition">
+                        <td class="p-4">${imgTag}</td>
+                        <td class="p-4 font-bold">${item.name}</td>
+                        <td class="p-4"><span class="text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded-md uppercase font-semibold text-zinc-500">${item.category}</span></td>
+                        <td class="p-4 font-semibold">Rp ${parseInt(item.price).toLocaleString()}</td>
+                        <td class="p-4 text-center">
+                            <button onclick="editMenu(${item.id})" class="text-amber-600 font-bold hover:underline mx-2">Edit</button>
+                            <button onclick="deleteMenu(${item.id})" class="text-red-500 font-bold hover:underline mx-2">Hapus</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            localStorage.setItem('laku_storage', JSON.stringify(menuData));
+        }
+
+        // Preview Image & Convert to Base64
+        function previewFile() {
+            const file = document.getElementById('menu-image').files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = function() {
+                currentImageBase64 = reader.result;
+                preview.src = reader.result;
+                preview.classList.remove('hidden');
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // CRUD Logic
+        function openModal() {
+            modal.classList.remove('hidden');
+            document.getElementById('form-menu').reset();
+            document.getElementById('menu-id').value = '';
+            preview.classList.add('hidden');
+            currentImageBase64 = "";
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        document.getElementById('form-menu').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('menu-id').value;
+            const name = document.getElementById('menu-name').value;
+            const category = document.getElementById('menu-category').value;
+            const price = document.getElementById('menu-price').value;
+
+            const entry = {
+                id: id ? parseInt(id) : Date.now(),
+                name,
+                category,
+                price,
+                image: currentImageBase64
+            };
+
+            if (id) {
+                const index = menuData.findIndex(m => m.id == id);
+                // Jika sedang edit dan tidak upload gambar baru, pakai gambar lama
+                if (!currentImageBase64) entry.image = menuData[index].image;
+                menuData[index] = entry;
+            } else {
+                menuData.push(entry);
+            }
+
+            renderMenu();
+            closeModal();
         });
+
+        window.editMenu = (id) => {
+            const item = menuData.find(m => m.id === id);
+            document.getElementById('menu-id').value = item.id;
+            document.getElementById('menu-name').value = item.name;
+            document.getElementById('menu-category').value = item.category;
+            document.getElementById('menu-price').value = item.price;
+            
+            if (item.image) {
+                preview.src = item.image;
+                preview.classList.remove('hidden');
+                currentImageBase64 = item.image;
+            } else {
+                preview.classList.add('hidden');
+                currentImageBase64 = "";
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        window.deleteMenu = (id) => {
+            if(confirm('Hapus produk ini?')) {
+                menuData = menuData.filter(m => m.id !== id);
+                renderMenu();
+            }
+        }
+
+        // Theme Toggle
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+
+        renderMenu();
     </script>
 </body>
 </html>
